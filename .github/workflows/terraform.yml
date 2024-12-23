@@ -60,6 +60,9 @@ jobs:
             - name: Terraform Validate
               run: terraform validate
 
+            - name: List files
+              run: ls -la main
+
             - name: Terraform Plan
               id: plan
               run: |
