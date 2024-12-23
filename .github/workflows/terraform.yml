@@ -15,6 +15,20 @@ on:
                 default: '1.10.3'
             
 jobs:
+    TFLint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup TFLint
+              uses: tflint-action@v4
+
+            - name: Show TFLint version
+              run: tflint -version
+
+            - name: Run TFLint
+              run: tflint
     ci:
         runs-on: ubuntu-latest
         steps:
@@ -29,12 +43,6 @@ jobs:
             - name: Show Terraform version
               run: terraform -version
 
-            - name: Setup TFLint
-              uses: tfsec/tfsec-action@v0.54.0
-
-            - name: Show TFLint version
-              run: tflint -version
-            
             - name: Terraform Init
               run: terraform init
 
@@ -43,9 +51,6 @@ jobs:
 
             - name: Terraform Validate
               run: terraform validate
-
-            - name: Run TFLint
-              run: tflint
 
             - name: Terraform Plan
               id: plan
