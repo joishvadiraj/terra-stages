@@ -22,7 +22,7 @@ jobs:
               uses: actions/checkout@v4
 
             - name: Cache plugin dir
-              uses: actions/cache@v2
+              uses: actions/cache@v4
               with:
                 path: ~/.tflint.d/plugins
                 key: ubuntu-latest-tflint-${{ hashFiles('**/tflint.hcl') }}
@@ -39,6 +39,7 @@ jobs:
               run: tflint
     ci:
         runs-on: ubuntu-latest
+        depends-on: TFLint
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -46,8 +47,7 @@ jobs:
             - name: Setup Terraform
               uses: hashicorp/setup-terraform@v3
               with:
-                  terraform_version: ${{ github.event.inputs.environment }}
-
+                  terraform_version: latest
             - name: Show Terraform version
               run: terraform -version
 
