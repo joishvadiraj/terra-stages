@@ -32,8 +32,8 @@ jobs:
             - name: Setup TFLint
               uses: tfsec/tfsec-action@v0.54.0
 
-            -name: Show TFLint version
-             run: tflint -version
+            - name: Show TFLint version
+              run: tflint -version
             
             - name: Terraform Init
               run: terraform init
