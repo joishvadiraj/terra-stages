@@ -39,7 +39,7 @@ jobs:
               run: tflint
     ci:
         runs-on: ubuntu-latest
-        depends-on: TFLint
+        needs: TFLint
         steps:
             - name: Checkout
               uses: actions/checkout@v4
