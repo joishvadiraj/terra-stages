@@ -61,7 +61,7 @@ jobs:
               run: terraform validate
 
             - name: List files
-              run: ls -la terraform/environments
+              run: ls -la terraform/environments/dev
 
             - name: Terraform Plan
               id: plan
