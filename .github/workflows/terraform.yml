@@ -1,0 +1,55 @@
+name: Terraform Workflow
+
+on: 
+    push:
+        branches:
+        - main
+    pull_request: 
+        branches:
+        - main
+    workflow_dispatch: 
+        inputs:
+            environment:
+                description: 'Terraform version'
+                required: true
+                default: '1.10.3'
+            
+jobs:
+    ci:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Terraform
+              uses: hashicorp/setup-terraform@v3
+              with:
+                  terraform_version: ${{ github.event.inputs.environment }}
+            
+            - name: Terraform Init
+              run: terraform init
+
+            - name: Terraform Format
+              run: terraform fmt -check -recursive
+
+            - name: Terraform Validate
+              run: terraform validate
+
+            - name: Run TFLint
+              run: tflint
+
+            - name: Terraform Plan
+              id: plan
+              run: |
+                    terraform plan -var-file=${{ github.ref_name }}/terraform.tfvars -out=tfplan
+              env:
+                  TF_VAR_environment: ${{ github.ref_name }}
+
+            - name: Upload Plan as Artifact
+              uses: actions/upload-artifact@v3
+              with:
+                  name: tfplan
+                  path: tfplan
+
+
+                  
