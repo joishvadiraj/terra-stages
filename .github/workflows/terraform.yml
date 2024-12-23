@@ -25,13 +25,21 @@ jobs:
               uses: hashicorp/setup-terraform@v3
               with:
                   terraform_version: ${{ github.event.inputs.environment }}
+
+            - name: Show Terraform version
+              run: terraform -version
+
+            - name: Setup TFLint
+              uses: tfsec/tfsec-action@v0.54.0
+
+            -name: Show TFLint version
+             run: tflint -version
             
             - name: Terraform Init
               run: terraform init
 
             - name: Terraform Format
               run: terraform fmt -check -recursive
-              continue-on-error: true
 
             - name: Terraform Validate
               run: terraform validate
