@@ -1,6 +1,6 @@
 # terra-stages
 
-
+```plaintext
 terraform/
 ├── modules/
 │   ├── vpc/
